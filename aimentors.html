@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Mentor + Leaderboard</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.container{
+  width:450px;
+  background:#1e293b;
+  padding:20px;
+  border-radius:12px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  background:#38bdf8;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+#response{
+  margin-top:10px;
+  background:#0f172a;
+  padding:10px;
+  min-height:60px;
+  border-radius:8px;
+}
+
+.leaderboard{
+  margin-top:15px;
+  background:#0f172a;
+  padding:10px;
+  border-radius:8px;
+}
+
+.user{
+  display:flex;
+  justify-content:space-between;
+  padding:5px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>AI Industry Mentor</h2>
+
+<input id="userInput" placeholder="Ask your doubt...">
+<button onclick="askMentor()">Ask</button>
+
+<div id="response">Response will appear here</div>
+
+<!-- LEADERBOARD -->
+<div class="leaderboard">
+<h3>🏆 Leaderboard</h3>
+<div id="board"></div>
+</div>
+
+</div>
+
+<script>
+// default leaderboard data
+let leaderboard = [
+  { name: "Arjun", score: 980 },
+  { name: "Priya", score: 920 },
+  { name: "You", score: 870 }
+];
+
+function renderBoard(){
+  document.getElementById("board").innerHTML =
+    leaderboard.map(u =>
+      `<div class="user">
+        <span>${u.name}</span>
+        <span>${u.score} pts</span>
+      </div>`
+    ).join("");
+}
+
+renderBoard();
+
+function askMentor(){
+  const input = document.getElementById("userInput").value;
+
+  // 🧠 SIMULATED AI RESPONSE (NO API ERROR)
+  let reply = "";
+
+  if(input.toLowerCase().includes("ai")){
+    reply = "Learn Python, ML basics, and build 2 projects like chatbot & prediction model.";
+  }
+  else if(input.toLowerCase().includes("web")){
+    reply = "Learn HTML, CSS, JS and build 3 projects like portfolio, dashboard, and API app.";
+  }
+  else{
+    reply = "Focus on fundamentals + build projects + practice daily coding.";
+  }
+
+  document.getElementById("response").innerText = reply;
+
+  // 🏆 UPDATE LEADERBOARD (gamification)
+  leaderboard = leaderboard.map(u=>{
+    if(u.name === "You"){
+      return { ...u, score: u.score + 10 };
+    }
+    return u;
+  });
+
+  renderBoard();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IndustrySimAI - Skill Gap Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .box {
+      background: #1e293b;
+      padding: 18px;
+      margin: 10px auto;
+      width: 380px;
+      border-radius: 12px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #38bdf8;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    canvas {
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .good { color: #4ade80; }
+    .bad { color: #f87171; }
+  </style>
+</head>
+
+<body>
+
+  <h1>IndustrySimAI - Skill Gap Dashboard</h1>
+
+  <div class="box">
+    <h3>🧠 AI Skill Gap Analysis</h3>
+    <p id="feedback">Click to analyze skills</p>
+  </div>
+
+  <div class="box">
+  <h3>📊 Skill Comparison</h3>
+  <canvas id="chart" style="max-height: 250px;"></canvas>
+</div>
+
+  <button onclick="analyze()">Analyze Skill Gap</button>
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+let chartInstance = null;
+
+function analyze() {
+
+  let student = [60, 50, 55];
+  let industry = [80, 70, 75];
+
+  let gap = (industry[0]-student[0]) +
+            (industry[1]-student[1]) +
+            (industry[2]-student[2]);
+
+  let msg = "";
+
+  if (gap <= 20) {
+    msg = "Low gap — Industry ready 👍";
+  } else if (gap <= 60) {
+    msg = "Medium gap — Needs training ⚠️";
+  } else {
+    msg = "High gap — Major upskilling needed ❌";
+  }
+
+  document.getElementById("feedback").innerText = msg;
+
+  // Destroy old chart if exists (important fix)
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  // Create new chart
+  chartInstance = new Chart(document.getElementById("chart"), {
+    type: "bar",
+    data: {
+      labels: ["Coding", "Communication", "Problem Solving"],
+      datasets: [
+        {
+          label: "Graduate",
+          data: student
+        },
+        {
+          label: "Industry",
+          data: industry
+        }
+      ]
+    }
+  });
+}
+</script>
+    
+
+</body>
+</html>
